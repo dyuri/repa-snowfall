@@ -18,3 +18,7 @@ Add `<repa-snowfall>` to your `body`:
   <repa-snowfall></repa-snowfall>
 </bofy>
 ```
+
+## Demo
+
+See [demo.html](demo.html).
