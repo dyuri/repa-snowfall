@@ -164,10 +164,26 @@ uniform float time;
 uniform vec2 resolution;
 varying vec4 vPos;
 
-float rand(vec2 p) {
-  vec3 p3 = fract(vec3(p.xyx) * .1021);
-  p3 += dot(p3, p3.yzx + 33.23);
-  return fract((p3.x + p3.y) * p3.z);
+vec2 rand2(vec2 p) {
+  return fract(sin(vec2(dot(p, vec2(12.234, 83.734)), dot(p, vec2(327.9, 982.42)) )* 23232.54));
+}
+
+float snow(vec2 uv, float m, float wind) {
+  vec2 st = uv * m;
+  float t = time * .01 / m;
+
+  // fall
+  st += vec2(t * 1.2 * wind, t * 2.4);
+
+  vec2 i_st = floor(st);
+  vec2 f_st = fract(st);
+  vec2 r_st = rand2(i_st / m);
+
+  vec2 p = .5 + (vec2(sin(t * 13. + length(i_st)), cos(length(i_st))) * r_st) * .4;
+
+  float c = 1. - smoothstep(.09 - .05 * r_st.x, .1, length(f_st - p));
+
+  return c;
 }
 
 void main() {
@@ -175,12 +191,13 @@ void main() {
   float aspect = resolution.x / resolution.y;
   uv.x *= aspect;
 
-  float t = time * .0000001;
   float col = 0.;
 
-  col = fract(rand(vec2(uv.x * 134.232, t + uv.y * 212.32)));
+  col += snow(uv, 10., 1.);
+  col += snow(uv, 12.5, 1.4);
+  col += snow(uv, 25., -.9);
 
-  gl_FragColor = vec4(.7, .8, .95, 1.) * col;
+  gl_FragColor = vec4(.7, .8, .95, .9) * col;
 }
 `;
 
