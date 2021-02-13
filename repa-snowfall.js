@@ -109,14 +109,12 @@ class RepaSnowfall extends HTMLElement {
   }
   
   createPrograms() {
-    const fragScript = this.querySelector("[type=frag]");
-    const vertScript = this.querySelector("[type=vert]");
     const HEADER = "precision highp float;";
     const DEFAULT_VERT = HEADER + RepaSnowfall.VERTEX_SHADER;
     const DEFAULT_FRAG = HEADER + RepaSnowfall.SNOW_SHADER;
     
     this.vertCode = DEFAULT_VERT;
-    this.fragCode = fragScript?.textContent || DEFAULT_FRAG;
+    this.fragCode = DEFAULT_FRAG;
     
     this.program = this.ctx.createProgram();
     
